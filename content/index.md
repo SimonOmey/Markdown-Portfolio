@@ -1,8 +1,20 @@
 ---
-title: Welcome to Quartz
+title: Simon Omey | Portfolio
+tags:
+date: 07/02/2026
+updated:
+class:
 ---
-Welcome to my site.
-Geschreven in nvim. 
+*Student Software Development in VIVES Kortrijk, te vinden achter een laptop aan het coderen.*
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+## Skills
+
+x
+
+## Projects
+
+x
+
+
+
+
