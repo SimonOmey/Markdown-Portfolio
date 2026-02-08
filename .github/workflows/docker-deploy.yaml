@@ -79,11 +79,24 @@ jobs:
             mkdir -p ~/quartz
             cd ~/quartz
             
-            # Create .env file
+            # .env bestand aanmaken
             echo "CLOUDFLARE_TUNNEL_TOKEN=${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}" > .env
             
-            # Login, Pull and Restart
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker compose pull
-            docker compose up -d
-            docker image prune -f
+            # Login met sudo
+            echo ${{ secrets.GITHUB_TOKEN }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Bepaal welk compose commando beschikbaar is
+            if sudo docker compose version > /dev/null 2>&1; then
+              DOCKER_COMPOSE="sudo docker compose"
+            elif sudo docker-compose version > /dev/null 2>&1; then
+              DOCKER_COMPOSE="sudo docker-compose"
+            else
+              echo "Docker Compose niet gevonden! Installeren..."
+              sudo apt-get update && sudo apt-get install -y docker-compose
+              DOCKER_COMPOSE="sudo docker-compose"
+            fi
+            
+            # Uitvoeren met de gevonden versie
+            $DOCKER_COMPOSE pull
+            $DOCKER_COMPOSE up -d
+            sudo docker image prune -f
