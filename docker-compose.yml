@@ -1,0 +1,22 @@
+services:
+  web:
+    image: ghcr.io/simonomey/markdown-portfolio:latest
+    restart: unless-stopped
+    # No ports needed if using Cloudflare Tunnel, as the tunnel connects to this container internally
+    # ports:
+    #   - "80:80" 
+    networks:
+      - quartz-net
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - quartz-net
+
+networks:
+  quartz-net:
+    driver: bridge
