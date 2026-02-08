@@ -1,5 +1,6 @@
 ---
 tags:
+  - projects/software/frontend
   - frameworks/frontend/vue
   - programming-languages/typescript
 date: 04/02/2026
@@ -10,6 +11,3 @@ Voor het feestweekend van het 70 jaar bestaan van Chiro Aartrijke heb ik een sit
 
 [Feestweekend Site](https://test-feestweekend.chiroaartrijke.be)
 
-# Tech Stack
-## Frontend 
-Vue.js 

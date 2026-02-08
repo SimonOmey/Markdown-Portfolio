@@ -1,11 +1,14 @@
 ---
 tags:
+  - projects/software/backend
+  - projects/software/mobile
   - frameworks/backend/spring-boot
   - frameworks/mobile/react-native
-  - projects/software/mobile
-  - projects/software/backend
+  - databases/postgreSQL
+  - cloud-providers/google-cloud-platform
+  - programming-languages/java
 date: 04/02/2026
-updated:
+updated: 06/02/2026
 class: project
 ---
 *Mobile/Web applicatie met React Native en Spring Boot*

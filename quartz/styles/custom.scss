@@ -1,3 +1,11 @@
 @use "./base.scss";
+@use "./variables.scss" as *;
 
 // put your custom CSS here!
+.external-embed.youtube {
+  @media all and ($mobile) {
+    max-width: 80%;
+    margin: 1rem auto;
+    display: block;
+  }
+}

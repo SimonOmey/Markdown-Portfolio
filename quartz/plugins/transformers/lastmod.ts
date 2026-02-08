@@ -14,13 +14,21 @@ const defaultOptions: Options = {
 
 // YYYY-MM-DD
 const iso8601DateOnlyRegex = /^\d{4}-\d{2}-\d{2}$/
+// DD/MM/YYYY
+const europeanDateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/
 
 function coerceDate(fp: string, d: any): Date {
   // check ISO8601 date-only format
   // we treat this one as local midnight as the normal
   // js date ctor treats YYYY-MM-DD as UTC midnight
-  if (typeof d === "string" && iso8601DateOnlyRegex.test(d)) {
-    d = `${d}T00:00:00`
+  if (typeof d === "string") {
+    const euMatch = d.match(europeanDateRegex)
+    if (euMatch) {
+      const [_, day, month, year] = euMatch
+      d = `${year}-${month}-${day}T00:00:00`
+    } else if (iso8601DateOnlyRegex.test(d)) {
+      d = `${d}T00:00:00`
+    }
   }
 
   const dt = new Date(d)

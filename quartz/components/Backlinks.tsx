@@ -33,13 +33,19 @@ export default ((opts?: Partial<BacklinksOptions>) => {
         <h3>{i18n(cfg.locale).components.backlinks.title}</h3>
         <OverflowList>
           {backlinkFiles.length > 0 ? (
-            backlinkFiles.map((f) => (
-              <li>
-                <a href={resolveRelative(fileData.slug!, f.slug!)} class="internal">
-                  {f.frontmatter?.title}
-                </a>
-              </li>
-            ))
+            backlinkFiles.map((f) => {
+              let title = f.frontmatter?.title
+              if (fileData.slug?.startsWith("tags/")) {
+                title = title?.split(" ").pop()
+              }
+              return (
+                <li>
+                  <a href={resolveRelative(fileData.slug!, f.slug!)} class="internal">
+                    {title}
+                  </a>
+                </li>
+              )
+            })
           ) : (
             <li>{i18n(cfg.locale).components.backlinks.noBacklinksFound}</li>
           )}
