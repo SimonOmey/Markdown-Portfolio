@@ -76,28 +76,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Zorg dat de map bestaat
             mkdir -p ~/quartz
             cd ~/quartz
             
-            # Create .env file for the tunnel token
+            # Create .env file
             echo "CLOUDFLARE_TUNNEL_TOKEN=${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}" > .env
             
-            # Login to GHCR met sudo
-            echo ${{ secrets.GITHUB_TOKEN }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            
-            # Check of we 'docker compose' of 'docker-compose' moeten gebruiken
-            if sudo docker compose version > /dev/null 2>&1; then
-              COMPOSE="sudo docker compose"
-            else
-              COMPOSE="sudo docker-compose"
-            fi
-            
-            # Pull the new image
-            $COMPOSE pull
-            
-            # Restart containers
-            $COMPOSE up -d
-            
-            # Cleanup unused images
-            sudo docker image prune -f
+            # Login, Pull and Restart
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
