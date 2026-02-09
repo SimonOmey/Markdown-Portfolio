@@ -20,3 +20,5 @@ class: project
 ### Over dit project
 Een interactieve eliminatie test gebaseerd op het TV programma De Mol.
 
+De applicatie is volledig geschreven in typescript. Van de Angular frontend tot de Nodejs backend. 
+

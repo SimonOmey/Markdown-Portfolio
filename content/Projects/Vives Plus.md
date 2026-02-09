@@ -21,3 +21,8 @@ Ik kreeg de opportuniteit om in het iOS team van de Vives Plus App te zitten en 
 
 ## Team
 Met dank aan deze teamgenoten liep dit project subliem:
+ - [Arthur Ferket](https://arthurferket.be/)
+ - Lars Coppieters
+ - Quinten Bernard
+ - Yorben Coulier
+ - Jerko Fermyn
