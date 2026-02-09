@@ -55,10 +55,29 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
+    permissions:
+      contents: read
+      packages: read
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Clean and Prepare server directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Stop bestaande containers als ze draaien
+            if [ -d "~/quartz" ]; then
+              cd ~/quartz
+              sudo docker compose down --remove-orphans || true
+            fi
+            # Verwijder map en maak hem opnieuw aan
+            rm -rf ~/quartz
+            mkdir -p ~/quartz
 
       - name: Copy docker-compose.yml to server
         uses: appleboy/scp-action@v0.1.7
@@ -76,27 +95,30 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p ~/quartz
             cd ~/quartz
             
-            # .env bestand aanmaken
-            echo "CLOUDFLARE_TUNNEL_TOKEN=${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}" > .env
+            # .env bestand veilig aanmaken
+            cat <<EOF > .env
+            CLOUDFLARE_TUNNEL_TOKEN=${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
+            EOF
             
-            # Login met sudo
-            echo ${{ secrets.GITHUB_TOKEN }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            # Login bij GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            # Bepaal welk compose commando beschikbaar is
+            # Bepaal compose commando
             if sudo docker compose version > /dev/null 2>&1; then
               DOCKER_COMPOSE="sudo docker compose"
-            elif sudo docker-compose version > /dev/null 2>&1; then
-              DOCKER_COMPOSE="sudo docker-compose"
             else
-              echo "Docker Compose niet gevonden! Installeren..."
-              sudo apt-get update && sudo apt-get install -y docker-compose
               DOCKER_COMPOSE="sudo docker-compose"
             fi
             
-            # Uitvoeren met de gevonden versie
+            # Start de boel
             $DOCKER_COMPOSE pull
             $DOCKER_COMPOSE up -d
-            sudo docker image prune -f
+            
+            # Toon status voor debugging
+            echo "--- Container Status ---"
+            $DOCKER_COMPOSE ps
+            
+            # Verwijder oude images om schijfruimte te besparen (belangrijk op Oracle Free Tier)
+            sudo docker image prune -a -f
