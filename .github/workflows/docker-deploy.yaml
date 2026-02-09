@@ -95,7 +95,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            set -e # Stop bij elke fout
+            set -e
             cd ~/quartz
             
             echo "Stap 1: .env aanmaken"
@@ -106,30 +106,31 @@ jobs:
             echo "Stap 2: Inloggen bij GHCR"
             echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            echo "Stap 3: Compose commando bepalen"
-            if sudo docker compose version > /dev/null 2>&1; then
-              DOCKER_COMPOSE="sudo docker compose"
-            else
-              DOCKER_COMPOSE="sudo docker-compose"
+            echo "Stap 3: Docker Compose V2 controleren/installeren"
+            if ! sudo docker compose version > /dev/null 2>&1; then
+              echo "Docker Compose V2 niet gevonden. Installeren..."
+              sudo apt-get update && sudo apt-get install -y docker-compose-v2
             fi
+            DOCKER_COMPOSE="sudo docker compose"
+            $DOCKER_COMPOSE version
             
             echo "Stap 4: Images pullen"
             $DOCKER_COMPOSE pull
             
             echo "Stap 5: Containers opstarten"
-            $DOCKER_COMPOSE up -d
+            # We gebruiken --force-recreate om zeker te zijn dat de oude buggy container-config weg is
+            $DOCKER_COMPOSE up -d --force-recreate
             
             echo "Stap 6: Controleer status"
-            sleep 5 # Even wachten tot ze echt up zijn
+            sleep 5
             echo "--- Container Status ---"
             $DOCKER_COMPOSE ps
             
-            # Als er geen containers 'Up' zijn, toon dan de logs
             if [ -z "$($DOCKER_COMPOSE ps -q)" ]; then
               echo "FOUT: Geen containers gestart! Logs:"
               $DOCKER_COMPOSE logs
               exit 1
             fi
             
-            echo "Stap 7: Opruimen oude images"
+            echo "Stap 7: Opruimen"
             sudo docker image prune -a -f
