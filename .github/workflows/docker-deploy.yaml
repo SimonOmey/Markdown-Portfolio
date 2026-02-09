@@ -95,30 +95,41 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -e # Stop bij elke fout
             cd ~/quartz
             
-            # .env bestand veilig aanmaken
+            echo "Stap 1: .env aanmaken"
             cat <<EOF > .env
             CLOUDFLARE_TUNNEL_TOKEN=${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
             EOF
             
-            # Login bij GHCR
+            echo "Stap 2: Inloggen bij GHCR"
             echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            # Bepaal compose commando
+            echo "Stap 3: Compose commando bepalen"
             if sudo docker compose version > /dev/null 2>&1; then
               DOCKER_COMPOSE="sudo docker compose"
             else
               DOCKER_COMPOSE="sudo docker-compose"
             fi
             
-            # Start de boel
+            echo "Stap 4: Images pullen"
             $DOCKER_COMPOSE pull
+            
+            echo "Stap 5: Containers opstarten"
             $DOCKER_COMPOSE up -d
             
-            # Toon status voor debugging
+            echo "Stap 6: Controleer status"
+            sleep 5 # Even wachten tot ze echt up zijn
             echo "--- Container Status ---"
             $DOCKER_COMPOSE ps
             
-            # Verwijder oude images om schijfruimte te besparen (belangrijk op Oracle Free Tier)
+            # Als er geen containers 'Up' zijn, toon dan de logs
+            if [ -z "$($DOCKER_COMPOSE ps -q)" ]; then
+              echo "FOUT: Geen containers gestart! Logs:"
+              $DOCKER_COMPOSE logs
+              exit 1
+            fi
+            
+            echo "Stap 7: Opruimen oude images"
             sudo docker image prune -a -f
