@@ -8,7 +8,7 @@ class:
 
 ## Skills
 
-- **Languages:** #programming-languages/java  #programming-languages/c-sharp, #programming-languages/typescript 
+- **Languages:** #programming-languages/java  #programming-languages/c-sharp, #programming-languages/typescript #programming-languages/swift 
 - **Frameworks:** #frameworks/backend/spring-boot, #frameworks/backend/dot-net #frameworks/frontend/vue, #frameworks/mobile/react-native 
 - **Databases:** #databases/microsoft-sql-server #databases/mongoDB #databases/postgreSQL
 - **Cloud:** #cloud-providers/microsoft-azure #cloud-providers/google-cloud-platform
