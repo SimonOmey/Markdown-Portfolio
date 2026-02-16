@@ -7,7 +7,7 @@ date: 04/02/2026
 updated:
 class: project
 ---
-Voor het feestweekend van het 70 jaar bestaan van Chiro Aartrijke heb ik [deze site](https://test-feestweekend.chiroaartrijke.be) gemaakt. 
+Voor het feestweekend van het 70 jaar bestaan van Chiro Aartrijke heb ik [deze site](https://feestweekend.chiroaartrijke.be) gemaakt. 
 
 
 
