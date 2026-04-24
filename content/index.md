@@ -1,10 +1,10 @@
 ---
 title: Simon Omey | Portfolio
 date: 07/02/2026
-updated:
+updated: 24/04/2026
 class:
 ---
-*Student Software Development in VIVES Kortrijk, Leider in [[Chiro Aartrijke]], te vinden achter mijn laptop.*
+*Student Software Development in VIVES Kortrijk, Leider in [[Chiro Aartrijke]], te vinden achter mijn laptop of bij de koffiemachine.*
 
 ## Skills
 
