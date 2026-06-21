@@ -4,7 +4,7 @@ date: 08/02/2026
 updated:
 class:
 ---
-Van het eerste leerjaar tot nu ben ik nog steeds trots lid van Aartrijke. 
+Van eerste leerjaar tot nu als leider ben ik heel trots lid van Chiro Aartrijke. 
 Doorheen mijn jaren als leider heb ik ook enkele projecten gerealiseerd voor de Chiro zoals:
 - De [website](https://chiroaartrijke.be) van Chiro Aartrijke helemaal vernieuwd.
 - Voor de oudste groep [[De Mol Eliminatietest]] webapplicatie in elkaar gestoken voor hun spel.
