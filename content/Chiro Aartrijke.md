@@ -4,10 +4,9 @@ date: 08/02/2026
 updated:
 class:
 ---
-Van eerste leerjaar tot nu als leider ben ik heel trots lid van Chiro Aartrijke. 
-Doorheen mijn jaren als leider heb ik ook enkele projecten gerealiseerd voor de Chiro zoals:
-- De [website](https://chiroaartrijke.be) van Chiro Aartrijke helemaal vernieuwd.
-- Voor de oudste groep [[De Mol Eliminatietest]] webapplicatie in elkaar gestoken voor hun spel.
+Sinds mijn eerste jaar als lid tot nu als leider, ben ik enorm trots deel uit te maken van Chiro Aartrijke. Als heb ik door de jaren heen verschillende projecten kunnen realiseren voor onze Chiro:
+- Een volledige vernieuwing van de [website](https://chiroaartrijke.be) van Chiro Aartrijke.
+- [[De Mol Eliminatietest]] webapplicatie in elkaar gestoken voor het spel van de oudste gasten.
 - De [[Feestweekend Site]]  gemaakt voor het 70 jaar bestaan van onze Chiro.
-- De [[Chiro Quiz App]] gebaseerd op de quizzen die wij georganiseerd hebben.
+- De [[Chiro Quiz App]], gebaseerd op de quizzen die wij georganiseerd hebben.
 
